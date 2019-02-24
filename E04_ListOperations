@@ -1,0 +1,109 @@
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class E04_ListOperations {
+    public static void main (String[] args){
+        Scanner scanner = new Scanner(System.in);
+
+
+        List<Integer> inputList = Arrays.stream(scanner.nextLine().split("\\s+"))
+                                    .map(Integer::parseInt)
+                                    .collect(Collectors.toList());
+
+
+        while(true){
+            String command = scanner.nextLine();
+
+            if (command.equalsIgnoreCase("end")){
+                break;
+            } else if (command.contains("Add")){
+                addToList(command, inputList);
+            } else if (command.contains("Insert")){
+                insertToList(command, inputList);
+            } else if (command.contains("Remove")){
+                removeFromList(command, inputList);
+            } else if(command.contains("Shift left")){
+                shiftLeftList(command, inputList);
+            } else if (command.contains("Shift right")){
+                shiftRightList(command, inputList);
+            }
+
+
+
+        }
+
+        System.out.println(inputList.toString().replaceAll("\\[|,|\\]", "").trim());
+
+
+    }
+
+    private static void shiftRightList(String command, List<Integer> inputList) {
+        List<String> commandToList = Arrays.stream(command.split("\\s+"))
+                                    .collect(Collectors.toList());
+
+        int numberOfShifts = Integer.parseInt(commandToList.get(2));
+        Collections.rotate(inputList, numberOfShifts);
+
+    }
+
+    private static void shiftLeftList(String command, List<Integer> inputList) {
+        List<String> commandToList = Arrays.stream(command.split("\\s+"))
+                                    .collect(Collectors.toList());
+
+        int ammountOfShifts = Integer.parseInt(commandToList.get(2));
+        int shifts = inputList.size() - ammountOfShifts;
+
+        Collections.rotate(inputList, shifts);
+
+
+    }
+
+    private static void removeFromList(String command, List<Integer> inputList) {
+        List<String> commandToList = Arrays.stream(command.split("\\s+"))
+                                    .collect(Collectors.toList());
+
+        int indexToBeRemoved = Integer.parseInt(commandToList.get(1));
+
+
+        if (indexToBeRemoved > inputList.size() - 1){
+            System.out.println("Invalid index");
+        } else {
+            inputList.remove(indexToBeRemoved);
+        }
+
+
+
+    }
+
+    private static void insertToList(String command, List<Integer> inputList) {
+        List<String> commandToList = Arrays.stream(command.split("\\s+"))
+                                    .collect(Collectors.toList());
+
+        int numberToBeInserted = Integer.parseInt(commandToList.get(1));
+        int indexOnWhichToBeInserted = Integer.parseInt(commandToList.get(2));
+
+
+
+        if (indexOnWhichToBeInserted > inputList.size() - 1){
+            System.out.println("Invalid index");
+        } else {
+            inputList.add(indexOnWhichToBeInserted, numberToBeInserted);
+        }
+
+
+    }
+
+    private static void addToList(String command, List<Integer> inputList) {
+        List<String> commandToString = Arrays.stream(command.split("\\s+"))
+                                        .collect(Collectors.toList());
+
+        int numberNeededToAdd = Integer.parseInt(commandToString.get(1));
+        inputList.add(numberNeededToAdd);
+
+    }
+
+
+}
