@@ -1,0 +1,69 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class E05_BombNumbers {
+    public static void main (String[] args){
+        Scanner scanner = new Scanner(System.in);
+
+
+        List<Integer> inputList = Arrays.stream(scanner.nextLine().split(" "))
+                                    .map(Integer::parseInt)
+                                    .collect(Collectors.toList());
+
+
+        List<Integer> specialNumberAndPower = Arrays.stream(scanner.nextLine().split(" "))
+                                                .map(Integer::parseInt)
+                                                .collect(Collectors.toList());
+
+
+        bombNumbers(inputList, specialNumberAndPower);
+
+
+
+
+
+    }
+
+    private static void bombNumbers(List<Integer> inputList, List<Integer> specialNumberAndPower) {
+
+        int specialNumber = specialNumberAndPower.get(0);
+        int power = specialNumberAndPower.get(1);
+
+        int specialNumberIndex = inputList.indexOf(specialNumber);
+
+        int startOfBombingIndex = 0;
+
+        if (specialNumberIndex - power > 0){
+            startOfBombingIndex = specialNumberIndex - power;
+        }
+
+        int endOfBombingIndex = inputList.size() - 1;
+        if (specialNumberIndex + power <= inputList.size()){
+            endOfBombingIndex = specialNumberIndex + power;
+        }
+
+        inputList.subList(startOfBombingIndex, endOfBombingIndex + 1).clear();
+
+        if (inputList.contains(specialNumber)){
+            bombNumbers(inputList, specialNumberAndPower);
+        } else {
+            getSumOfList(inputList);
+        }
+
+
+
+    }
+
+    private static void getSumOfList(List<Integer> inputList) {
+       int sum = 0;
+
+        for (int i = 0; i <inputList.size() ; i++) {
+            sum += inputList.get(i);
+        }
+
+        System.out.println(sum);
+    }
+}
