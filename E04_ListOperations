@@ -68,7 +68,7 @@ public class E04_ListOperations {
         int indexToBeRemoved = Integer.parseInt(commandToList.get(1));
 
 
-        if (indexToBeRemoved > inputList.size() - 1){
+        if (indexToBeRemoved > inputList.size() - 1 || indexToBeRemoved < 0){
             System.out.println("Invalid index");
         } else {
             inputList.remove(indexToBeRemoved);
@@ -87,7 +87,7 @@ public class E04_ListOperations {
 
 
 
-        if (indexOnWhichToBeInserted > inputList.size() - 1){
+        if (indexOnWhichToBeInserted > inputList.size() - 1 || indexOnWhichToBeInserted < 0){
             System.out.println("Invalid index");
         } else {
             inputList.add(indexOnWhichToBeInserted, numberToBeInserted);
