@@ -1,0 +1,3 @@
+   System.out.println(initialList.toString().replaceAll("\\[|,|\\]", "").trim());
+   
+   // this is used to create a List into string and remove all the brackets and ",".
