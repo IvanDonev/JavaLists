@@ -1,0 +1,72 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class E01_Train {
+    public static void main (String[] args){
+        Scanner scanner = new Scanner(System.in);
+
+        List<Integer> initialWagons = Arrays.stream(scanner.nextLine().split(" "))
+                                        .map(Integer::parseInt)
+                                        .collect(Collectors.toList());
+
+        List<Integer> passengersToBoard = new ArrayList<>();
+
+        int n = Integer.parseInt(scanner.nextLine());
+
+
+        while (true){
+            String command = scanner.nextLine();
+
+            if (command.equalsIgnoreCase("end")){
+                break;
+            } else if (Character.isAlphabetic(command.charAt(0))){
+              initialWagons = addWagonToTrain(command, initialWagons);
+              continue;
+            }
+
+            passengersToBoard.add(Integer.parseInt(command));
+
+        }
+
+        initialWagons = getBoardingPlaces(passengersToBoard, initialWagons, n);
+
+        System.out.println(initialWagons.toString().replaceAll("\\[|,|\\]", "").trim());
+
+    }
+
+    private static List<Integer> getBoardingPlaces(List<Integer> passengersToBoard, List<Integer> initialWagons, int n) {
+
+        for (int i = 0; i <passengersToBoard.size(); i++) {
+            int currentNum = passengersToBoard.get(i);
+
+            for (int j = 0; j <initialWagons.size(); j++) {
+                if (currentNum + initialWagons.get(j) <= n){
+                    initialWagons.set(j, currentNum + initialWagons.get(j));
+                    break;
+                }
+
+            }
+        }
+
+
+        return initialWagons;
+    }
+
+    private static List<Integer> addWagonToTrain(String command, List<Integer> initialWagon) {
+        String[] addString = command.split(" ");
+        int passengerAdd = 0;
+
+        for (int i = 0; i <addString.length; i++) {
+            if (Character.isDigit(addString[i].charAt(0))){
+                passengerAdd = Integer.parseInt(addString[i]);
+            }
+        }
+
+        initialWagon.add(passengerAdd);
+
+        return initialWagon;
+    }
+}
