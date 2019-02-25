@@ -1,0 +1,59 @@
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class E02_ChangeList {
+    public static void main (String[] args){
+        Scanner scanner = new Scanner(System.in);
+
+        List<Integer> initialList = Arrays.stream(scanner.nextLine().split(" "))
+                                    .map(Integer::parseInt)
+                                    .collect(Collectors.toList());
+
+        while (true){
+            String command = scanner.nextLine();
+
+            if (command.equalsIgnoreCase("end")){
+                break;
+            } else if (command.contains("Delete")){
+                deleteElement(command, initialList);
+            } else if (command.contains("Insert")){
+                addElement(command, initialList);
+            }
+        }
+        System.out.println(initialList.toString().replaceAll("\\[|,|\\]", "").trim());
+
+    }
+
+    private static void addElement(String command, List<Integer> initialList) {
+        List<String> commandToString = Arrays.stream(command.split(" "))
+                                        .collect(Collectors.toList());
+
+
+        commandToString.remove("Insert");
+        int value = Integer.parseInt(commandToString.get(0));
+        int index = Integer.parseInt(commandToString.get(1));
+
+        if (index > initialList.size()){
+            return;
+        }
+
+        initialList.add(index, value);
+    }
+
+    private static void deleteElement(String command, List<Integer> initialList) {
+        List<String> commandToString = Arrays.stream(command.split(" "))
+                                        .collect(Collectors.toList());
+
+        commandToString.remove("Delete");
+        int element = Integer.parseInt(commandToString.get(0));
+
+        for (int i = 0; i <initialList.size(); i++) {
+            if (element == initialList.get(i)){
+                initialList.remove(i);
+            }
+
+        }
+    }
+}
