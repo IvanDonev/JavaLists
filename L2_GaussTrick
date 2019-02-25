@@ -1,0 +1,29 @@
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class L2_GaussTrick {
+    public static void main (String[] args){
+        Scanner scanner = new Scanner(System.in);
+
+        List<Integer> listInput = Arrays.stream(scanner.nextLine().split(" "))
+                        .map(Integer::parseInt)
+                        .collect(Collectors.toList());
+
+        int initialSize = listInput.size();
+
+        for (int i = 0; i < initialSize / 2; i++) {
+            int firstNum = listInput.get(i);
+            int index = (listInput.size() - 1);
+            int secondNum = listInput.get(index);
+
+            listInput.set(i, firstNum + secondNum);
+            listInput.remove(index);
+
+        }
+
+        System.out.println(listInput.toString().replaceAll("\\[|,|\\]", "").trim());
+
+    }
+}
